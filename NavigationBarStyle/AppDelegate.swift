@@ -37,7 +37,6 @@ class Navigator: NSObject, UINavigationControllerDelegate {
         viewController.automaticallyAdjustsScrollViewInsets = true
         
         guard let styleContext = viewController as? NavigationBarStyleContext else {
-            navigationBar.applyStyle(NavigationBarStyle(background: .None, foregroundColor: nil))
             return
         }
         

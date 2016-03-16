@@ -8,26 +8,29 @@
 
 import UIKit
 
-// MARK: Style
+// MARK: Background style
+
+enum NavigationBarStyleBackground {
+    case None
+    case Transparent
+    case BackgroundImage(UIImage?)
+    case Color(UIColor?)
+}
+
+// MARK: Navigation bar style
 
 struct NavigationBarStyle {
-    enum Background {
-        case None
-        case Transparent
-        case BackgroundImage(UIImage?)
-        case Color(UIColor?)
-    }
-    let background: Background
+    let background: NavigationBarStyleBackground
     let foregroundColor: UIColor?
     
-    init(background: Background = .None, foregroundColor: UIColor? = nil) {
+    init(background: NavigationBarStyleBackground = .None, foregroundColor: UIColor? = nil) {
         self.background = background
         self.foregroundColor = foregroundColor
     }
 }
 
 // MARK: Context
-// implemented by UIViewControllers so they can interop with the custom nav bar
+// implemented by UIViewControllers so they can interop with the nav bar
 
 protocol NavigationBarStyleContext: class {
     func prefersNavigationBarHidden() -> Bool
@@ -41,7 +44,6 @@ extension NavigationBarStyleContext {
 }
 
 // MARK: NavigationBar
-// supports cleaner declarative styling
 // allows touches to pass thru bar, if desirable
 
 class NavigationBar: UINavigationBar {
@@ -70,7 +72,7 @@ class NavigationBar: UINavigationBar {
             shadowImage = nil
             barTintColor = nil
             capturesTouchesOnBackground = true
-
+            
         case .Transparent:
             setBackgroundImage(UIImage(), forBarMetrics: .Default)
             shadowImage = UIImage()
